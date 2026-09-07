@@ -103,12 +103,13 @@ typedef struct
 	pixel_t	  screen[256 * 256];
 	unsigned int screen32[256 * 256];
 #endif
-	byte		 addmap[256 * 256];
-	byte		 modmap[256 * 256];
-	pixel_t	  alphamap[3 * 1024 * 256];
-	pixel_t	  color;
-	qboolean	 is2d;
-	byte		 alpha;
+	byte         addmap[256 * 256];
+	byte         modmap[256 * 256];
+	pixel_t      alphamap[3 * 1024 * 256];
+	pixel_t      color;
+	qboolean     is2d;
+	float        offset2d[2];
+	byte         alpha;
 
 	// maybe compute colormask for minor byte?
 	int		  rendermode;
@@ -333,6 +334,7 @@ void GL_Bind( int tmu, unsigned int texnum );
 // gl_draw.c
 //
 void R_Set2DMode( qboolean enable );
+void R_Set2DOffset( float x, float y );
 void GL_UpdateTexture( int texnum, int cols, int rows, int width, int height, const byte *buffer, pixformat_t fmt );
 
 // gl_image.c
