@@ -96,7 +96,8 @@ static const feature_message_t bugcomp_features[] =
 { BUGCOMP_PENTITYOFENTINDEX_FLAG, "pfnPEntityOfEntIndex bugfix revert", "peoei" },
 { BUGCOMP_MESSAGE_REWRITE_FACILITY_FLAG, "GoldSrc Message Rewrite Facility", "gsmrf" },
 { BUGCOMP_SPATIALIZE_SOUND_WITH_ATTN_NONE, "spatialize sounds with zero attenuation", "sp_attn_none" },
-{ BUGCOMP_GET_GAME_DIR_FULL_PATH, "Return full path in GET_GAME_DIR()", "get_game_dir_full" }
+{ BUGCOMP_GET_GAME_DIR_FULL_PATH, "Return full path in GET_GAME_DIR()", "get_game_dir_full" },
+{ BUGCOMP_SPAWNFLAG_NOT_DEATHMATCH, "Inhibit entities with \"Not in Deathmatch\" spawnflag", "sf_notdm" },
 };
 
 static const feature_message_t engine_features[] =
@@ -507,8 +508,9 @@ static double Host_CalcFPS( void )
 	}
 	else if( Host_IsSinglePlayerGame( ))
 	{
-		if( !gl_vsync.value )
-			fps = host_maxfps.value;
+		// vsync is expected to limit the framerate, but some drivers
+		// ignore it, so never let the game run completely unlimited
+		fps = gl_vsync.value ? MAX_FPS_HARD : host_maxfps.value;
 	}
 	else if( !SV_Active() && CL_Protocol() == PROTO_GOLDSRC && cls.state != ca_disconnected && cls.state < ca_validate )
 	{
@@ -516,12 +518,16 @@ static double Host_CalcFPS( void )
 	}
 	else
 	{
-		if( !gl_vsync.value )
-		{
-			double max_fps = fps_override.value ? MAX_FPS_HARD : MAX_FPS_SOFT;
+		const double max_fps = fps_override.value ? MAX_FPS_HARD : MAX_FPS_SOFT;
 
+		if( gl_vsync.value )
+			fps = max_fps;
+		else
+		{
 			fps = host_maxfps.value;
-			if( fps == 0.0 ) fps = max_fps;
+			if( fps == 0.0 )
+				fps = max_fps;
+
 			fps = bound( MIN_FPS, fps, max_fps );
 		}
 	}
@@ -1155,7 +1161,7 @@ static void Host_FreeCommon( void )
 
 static void Sys_Quit_f( void )
 {
-	Sys_Quit( "command" );
+	Sys_Quit( Cmd_Argc() > 1 ? Cmd_Argv( 1 ) : "command" );
 }
 
 /*
