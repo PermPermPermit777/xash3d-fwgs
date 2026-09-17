@@ -10,7 +10,7 @@ plugins {
 
 extensions.configure<ApplicationExtension> {
 	namespace = "su.xash.engine"
-	ndkVersion = "29.0.14206865"
+	ndkVersion = "30.0.16248370"
 	compileSdk = 36
 
 	defaultConfig {
