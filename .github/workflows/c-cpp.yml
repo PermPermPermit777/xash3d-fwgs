@@ -32,7 +32,7 @@ jobs:
         submodules: recursive
         token: ${{ secrets.TOKEN_ACTION }}
     - name: pre-Update Submodules
-      run: git submodule update --recursive --remote --merge
+      run: git submodule update --init --recursive --remote --merge
     - name: Install dependencies
       run: bash scripts/gha/deps_${{ matrix.targetos }}.sh
     - name: Build engine
