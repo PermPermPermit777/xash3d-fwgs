@@ -30,8 +30,7 @@ jobs:
       with:
         submodules: recursive
     - name: Update Submodules
-      id: submodules
-      uses: sgoudham/update-git-submodules@v2.1.3
+      run: git submodule update --remote --merge
     - name: Install dependencies
       run: bash scripts/gha/deps_${{ matrix.targetos }}.sh
     - name: Build engine
