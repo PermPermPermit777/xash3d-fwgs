@@ -2,17 +2,18 @@ name: Submodule
 on:
   workflow_dispatch:
 jobs:
-  example:
+  submodule:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with: 
-          persist-credentials: false
           token: ${{ secrets.TOKEN_ACTION }}
           fetch-depth: 0
-          submodules: recursive
+          submodules: true
       - name: update submodule
-        run: git submodule update --init --recursive --remote --merge
+        run: |
+          git config --global url."git@github.com:".insteadOf "https://github.com/"
+          git submodule update --init --recursive --remote --merge
       - uses: qoomon/actions--setup-git@v1.1.1
         env:
           token: ${{ secrets.TOKEN_ACTION }}
