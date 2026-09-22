@@ -19,6 +19,7 @@ jobs:
             targetarch: multiarch
     env:
       SDL_VERSION: 2.32.10
+      GH_TOKEN: ${{ secrets.TOKEN_ACTION }}
       FFMPEG_VERSION: 8.1
       YY_THUNKS_VERSION: v1.2.1
       GH_CPU_ARCH: ${{ matrix.targetarch }}
