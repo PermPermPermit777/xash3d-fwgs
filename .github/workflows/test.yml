@@ -15,10 +15,10 @@ jobs:
           git config --global url."https://x-access-token:${{ secrets.TOKEN_ACTION }}@github.com".insteadOf git://github
           git submodule update --init --recursive --remote --merge
       - uses: qoomon/actions--setup-git@v1.1.1
-        env:
-          token: ${{ secrets.TOKEN_ACTION }}
         with:
           user: bot
+        env:
+          GH_TOKEN: ${{ secrets.TOKEN_ACTION }}
 
       - run: |
           git add .
