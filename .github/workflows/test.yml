@@ -12,7 +12,7 @@ jobs:
           submodules: true
       - name: update submodule
         run: |
-          git config --global url."git@github.com:".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ secrets.TOKEN_ACTION }}@github.com".insteadOf git://github
           git submodule update --init --recursive --remote --merge
       - uses: qoomon/actions--setup-git@v1.1.1
         env:
@@ -23,4 +23,4 @@ jobs:
       - run: |
           git add .
           git commit -m "chore: update all submodule"
-          git push origin master
+          git push
