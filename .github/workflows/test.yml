@@ -4,22 +4,21 @@ on:
 jobs:
   submodule:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TOKEN_ACTION }}
     steps:
-      - uses: actions/checkout@v6
-        with: 
-          token: ${{ secrets.TOKEN_ACTION }}
+      - uses: actions/checkout@v7
+        with:
           fetch-depth: 0
           submodules: true
       - name: update submodule
         run: |
-          git config --global url."https://x-access-token:${{ secrets.TOKEN_ACTION }}@github.com".insteadOf git://github
+          git config --global url."https://${{ secrets.TOKEN_ACTION }}@github.com".insteadOf git://github.com
           git submodule update --init --recursive --remote --merge
       - uses: qoomon/actions--setup-git@v1.1.1
         with:
           user: bot
-        env:
-          GH_TOKEN: ${{ secrets.TOKEN_ACTION }}
-
+  
       - run: |
           git add .
           git commit -m "chore: update all submodule"
