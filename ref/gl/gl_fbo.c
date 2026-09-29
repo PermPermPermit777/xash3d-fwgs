@@ -14,7 +14,6 @@ GNU General Public License for more details.
 */
 
 #include "gl_local.h"
-#include "gl_export.h"
 
 static void GL_FreeRenderTarget( gl_rendertarget_t *target )
 {
