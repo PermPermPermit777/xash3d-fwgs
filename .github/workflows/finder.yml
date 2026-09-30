@@ -1,13 +1,18 @@
-name: Conflict finder
-on: [push]
-
+name: Merge any release branch to uat
+on:
+  push:
+    branches:
+      - '*'
 jobs:
-  merge_conflict_job:
+  merge-branch:
     runs-on: ubuntu-latest
-    name: Find merge conflicts
     steps:
-      # Checkout the source code so there are some files to look at.
       - uses: actions/checkout@v7
-      # Run the actual merge conflict finder
-      - name: Merge Conflict finder
-        run: git diff --name-only --diff-filter=U --relative
+
+      - name: Merge staging -> uat
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          target_branch: master
+          message: Merge backup into master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
