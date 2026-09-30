@@ -1,18 +1,18 @@
-name: Merge any release branch to uat
+name: merge
 on:
-  push:
-    branches:
-      - '*'
+  workflow_dispatch:
 jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
-      - name: Merge staging -> uat
+      - name: Merge staging -> master
         uses: devmasx/merge-branch@v1.4.0
         with:
           type: now
           target_branch: master
-          message: Merge backup into master
+          commit_message: Merge backup into master
           github_token: ${{ secrets.GITHUB_TOKEN }}
