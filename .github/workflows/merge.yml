@@ -5,12 +5,12 @@ jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@master
         with:
           fetch-depth: 0
 
       - name: Merge staging -> master
-        uses: devmasx/merge-branch@v1.4.0
+        uses: devmasx/merge-branch@master
         with:
           type: now
           target_branch: master
