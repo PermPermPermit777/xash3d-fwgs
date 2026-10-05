@@ -12,10 +12,7 @@ jobs:
          submodules: true
      - name: Setup Git user
        uses: fregante/setup-git-user@v2.0.2
-     - run: |
-          git pull -X theirs origin master
-          git add .
-          git commit -m "Merge"
-          git push origin master
+     - run: git fetch
+     - run: git merge --strategy-option theirs
        
   
