@@ -14,7 +14,7 @@ jobs:
        uses: fregante/setup-git-user@v2.0.2
      - run: git remote add upstream https://github.com/PermPermPermit777/xash3d-fwgs
      - run: git fetch upstream
-     - run: git merge --strategy-option theirs
+     - run: git merge upstream/master --strategy-option theirs
      - run: |
           git add .
           git commit -m "merge"
