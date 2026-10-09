@@ -1,6 +1,6 @@
 name: Commit
 
-on: push
+on: workflow_dispatch
 
 jobs:
   commit:
@@ -15,7 +15,7 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           submodules: recursive 
-      - run: git submodule update --init --recursive --remote --merge
+      - run: git submodule update --recursive --remote --merge
       - uses: stefanzweifel/git-auto-commit-action@v7.2.0
         id: auto-commit-action
         with:
