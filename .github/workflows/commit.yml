@@ -12,11 +12,12 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.TOKEN_ACTION }}
-          persist-credentials: true
           fetch-depth: 0
           submodules: recursive 
-      - run: git submodule update --recursive --remote --merge
-      - uses: stefanzweifel/git-auto-commit-action@v7.2.0
-        id: auto-commit-action
-        with:
-          commit_message: Updated. submodule
+      - name: Setup Git user
+        uses: fregante/setup-git-user@main
+      - run: | 
+            git submodule update --recursive --remote --merge
+            git add .
+            git commit -m "Updated submodule."
+            git push
