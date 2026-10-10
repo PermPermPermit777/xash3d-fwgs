@@ -8,14 +8,15 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.TOKEN_ACTION }}
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@master
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.TOKEN_ACTION }}
           fetch-depth: 0
+          persist-credentials: true
           submodules: recursive 
-      - name: Setup Git user
-        uses: fregante/setup-git-user@main
+      - run: git config --global user.name "${{ secrets.USERBOT }}"
+      - run: git config --global user.email "${{ secrets.EMAILBOT }}"
       - run: | 
             git submodule update --recursive --remote --merge
             git add .
