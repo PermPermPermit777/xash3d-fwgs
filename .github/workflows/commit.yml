@@ -15,10 +15,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
           submodules: recursive 
-      - run: git config --global user.name "${{ secrets.USERBOT }}"
-      - run: git config --global user.email "${{ secrets.EMAILBOT }}"
-      - run: | 
-            git submodule update --recursive --remote --merge
-            git add .
-            git commit -m "Updated submodule."
-            git push
+      - run: git submodule update --recursive --remote --merge
+      - uses: stefanzweifel/git-auto-commit-action@master
+        with:
+          commit_message: Updated submodule.
