@@ -11,12 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-<<<<<<< HEAD
 import su.xash.engine.FPicker
-=======
 import su.xash.engine.BuildConfig
 import su.xash.engine.MainActivity
->>>>>>> upstream/master
 import su.xash.engine.R
 import java.io.File
 
@@ -67,7 +64,6 @@ class AppSettingsPreferenceFragment : PreferenceFragmentCompat() {
 			true
 		}
 
-<<<<<<< HEAD
 		val iconPref = findPreference<Preference>("open_app_icons_screen")
 		val currentIcon = prefs.getString("app_icon_setting", "DEFAULT")
 		
@@ -91,7 +87,6 @@ class AppSettingsPreferenceFragment : PreferenceFragmentCompat() {
 		val prefs = requireContext().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
 		prefs.edit().putString("game_path", path).apply()
 		findPreference<Preference>("game_path")?.summary = path
-=======
 		findPreference<Preference>("check_updates")?.apply {
 			// Auto-update is only compiled into the continuous build; hide the
 			// manual check elsewhere, since the updater is a no-op there.
@@ -101,6 +96,5 @@ class AppSettingsPreferenceFragment : PreferenceFragmentCompat() {
 				true
 			}
 		}
->>>>>>> upstream/master
 	}
 }
