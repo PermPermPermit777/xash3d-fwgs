@@ -30,12 +30,32 @@ class AppUpdater(private val context: Context) {
         val downloadUrl: String
     )
 
-    private var cachedDownloadUrl: String? = null
+	sealed interface UpdateCheck {
+		data class Available(val info: UpdateInfo) : UpdateCheck
+		object UpToDate : UpdateCheck
+		object Disabled : UpdateCheck
+		data class Failed(val reason: String?) : UpdateCheck
+	}
 
-    val downloadedApkFile: File
-        get() = File(context.cacheDir, "xash3d-fwgs-update.apk")
+	fun canInstall(): Boolean =
+		Build.VERSION.SDK_INT < Build.VERSION_CODES.O ||
+			context.packageManager.canRequestPackageInstalls()
 
-    fun hasDownloadedApk(): Boolean = downloadedApkFile.exists() && downloadedApkFile.length() > 0
+	suspend fun checkForUpdate(): UpdateCheck {
+		if (!BuildConfig.ENABLE_AUTO_UPDATE) return UpdateCheck.Disabled
+		return withContext(Dispatchers.IO) {
+			var connection: HttpURLConnection? = null
+			try {
+				connection = URL(RELEASE_API_URL).openConnection() as HttpURLConnection
+				connection.connectTimeout = 5000
+				connection.readTimeout = 5000
+				connection.setRequestProperty("Accept", "application/vnd.github+json")
+				connection.connect()
+
+				if (connection.responseCode != HttpURLConnection.HTTP_OK) {
+					Log.w(TAG, "Release API check failed: HTTP ${connection.responseCode}")
+					return@withContext UpdateCheck.Failed("HTTP ${connection.responseCode}")
+				}
 
     fun canInstall(): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.O ||
@@ -51,10 +71,23 @@ class AppUpdater(private val context: Context) {
                 connection.readTimeout = 5000
                 connection.connect()
 
-                if (connection.responseCode != HttpURLConnection.HTTP_OK) {
-                    Log.w(TAG, "Update JSON check failed: HTTP ${connection.responseCode}")
-                    return@withContext null
-                }
+				if (remote != null && remote - localDays >= STALENESS_DAYS)
+					UpdateCheck.Available(UpdateInfo(remote, tagName))
+				else
+					UpdateCheck.UpToDate
+			} catch (e: CancellationException) {
+				throw e
+			} catch (e: IOException) {
+				Log.w(TAG, "Update check failed: ${e.message}")
+				UpdateCheck.Failed(e.message)
+			} catch (e: JSONException) {
+				Log.w(TAG, "Update check parse failed: ${e.message}")
+				UpdateCheck.Failed(e.message)
+			} finally {
+				connection?.disconnect()
+			}
+		}
+	}
 
                 val json = JSONObject(connection.inputStream.bufferedReader().readText())
                 val latestVersion = json.optString("latest_version_name", "")
