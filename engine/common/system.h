@@ -43,11 +43,11 @@ writes into struct by offsets not names
 */
 typedef struct dll_info_s
 {
-	const char      *name;	// name of library
+	const char	  *name;	// name of library
 	const dllfunc_t *fcts;	// list of dll exports
-	const size_t    num_fcts;
-	qboolean        crash;	// crash if dll not found
-	void            *link;	// hinstance of loading library
+	const size_t	num_fcts;
+	qboolean		crash;	// crash if dll not found
+	void			*link;	// hinstance of loading library
 } dll_info_t;
 
 extern int error_on_exit;
@@ -69,7 +69,6 @@ void Sys_Print( const char *pMsg );
 void Sys_Quit( const char *reason ) NORETURN;
 qboolean Sys_CanRestart( void );
 qboolean Sys_NewInstance( const char *gamedir, const char *finalmsg );
-void Sys_UpdateWindowInsets( void );
 void *Sys_GetNativeObject( const char *obj );
 
 //
