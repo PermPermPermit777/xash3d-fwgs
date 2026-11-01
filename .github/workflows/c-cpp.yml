@@ -26,6 +26,7 @@ jobs:
     - uses: gradle/actions/setup-gradle@main
       with:
        validate-wrappers: false
+       cache-overwrite-existing: true
     - uses: actions/cache@main
       with:
         path: ~/work/xash3d-fwgs/xash3d-fwgs/sdk
