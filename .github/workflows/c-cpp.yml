@@ -28,7 +28,7 @@ jobs:
        validate-wrappers: false
     - uses: actions/cache@main
       with:
-        path: $GITHUB_WORKSPACE/sdk
+        path: ~/work/xash3d-fwgs/xash3d-fwgs/sdk
         key: sdk-cachekey
     - name: Install dependencies
       run: bash scripts/gha/deps_${{ matrix.targetos }}.sh
