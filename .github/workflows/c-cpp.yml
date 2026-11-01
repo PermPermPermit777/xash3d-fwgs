@@ -26,6 +26,10 @@ jobs:
     - uses: gradle/actions/setup-gradle@main
       with:
        validate-wrappers: false
+    - uses: actions/cache@main
+      with:
+        path: $GITHUB_WORKSPACE/sdk
+        key: sdk-cachekey
     - name: Install dependencies
       run: bash scripts/gha/deps_${{ matrix.targetos }}.sh
     - name: Build engine
