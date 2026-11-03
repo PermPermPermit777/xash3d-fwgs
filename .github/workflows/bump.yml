@@ -11,7 +11,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
-      - run: git submodule update --init --remote --recursive
+      - uses: sgoudham/update-git-submodules@main
       - uses: stefanzweifel/git-auto-commit-action@master
         with:
           commit_message: Bump all Submodule to latest commit
