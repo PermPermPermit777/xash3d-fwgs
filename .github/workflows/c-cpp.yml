@@ -26,6 +26,7 @@ jobs:
     - uses: gradle/actions/setup-gradle@main
       with:
        validate-wrappers: false
+       cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
        cache-overwrite-existing: true
     - uses: actions/cache@main
       with:
