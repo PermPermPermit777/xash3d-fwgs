@@ -11,6 +11,7 @@ Xash3D ([pronounced](https://ipa-reader.com/?text=ks%C9%91%CA%82) `[ksɑʂ]`) FW
 Xash3D FWGS is a heavily modified fork of an original [Xash3D Engine](https://www.moddb.com/engines/xash3d-engine) by Unkle Mike.
 
 ## improve and fork
+Credit to a1batross and his fellow team
 I don't know why i fork this but i should do improvement stuff
 
 ## Donate
@@ -22,13 +23,13 @@ If you like Xash3D FWGS, consider supporting individual engine maintainers. By s
 * Crossplatform and modern compilers support: supports Windows, Linux, BSD & Android on x86 & ARM and [many more](Documentation/ports.md).
 * Better multiplayer: multiple master servers, headless dedicated server, voice chat, [GoldSrc protocol support](Documentation/goldsrc-protocol-support.md) and IPv6 support.
 * Multiple renderers support: OpenGL, GLESv1, GLESv2 and Software.
-* Advanced virtual filesystem: `.pk3` and `.pk3dir` support, compatibility with GoldSrc FS module, fast case-insensitivity emulation for crossplatform.
+* Advanced virtual filesystem: `.pk3` and `.pk3dir` support, compatibility with GoldSrc FS module, fast case-insensitivity emulation for crossplatform. (note: Try Pak instead of pk3)
 * Mobility API: better game integration on mobile devices (vibration, touch controls).
 * Different input methods: touch and gamepad in addition to mouse & keyboard.
 * TrueType font rendering, as a part of mainui_cpp.
-* External VGUI support module.
+* External VGUI support module. (`its got replace by freevgui fr`)
 * PNG & KTX2 image format support.
-* Ogg Vorbis (`.ogg`) & Ogg Opus (`.opus`) audio formats support.
+* Ogg Vorbis (`.ogg`) & Ogg Opus (`.opus`) audio formats support. (`opus/ogg commit so old I had update so it does have better sounds quality`)
 * [A set of small improvements](Documentation/), without broken compatibility.
 
 ## Installation & Running
