@@ -64,7 +64,7 @@ def main():
 
 	# configure SDL2
 	sdl_path = os.path.join(args.wscript_path, "3rdparty", "SDL")
-	check_repo("SDL", "release-2.32.8", "https://github.com/libsdl-org/SDL", sdl_path)
+	check_repo("SDL", "release-2.32.10", "https://github.com/libsdl-org/SDL", sdl_path)
 
 	sdl_out_path = os.path.join(args.configuration_dir, "SDL")
 
