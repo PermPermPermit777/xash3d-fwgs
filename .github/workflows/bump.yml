@@ -11,6 +11,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
+      - run: git submodule update --init --checkout 3rdparty/nanogl 3rdparty/gl4es/gl4es
       - uses: sgoudham/update-git-submodules@main
       - uses: stefanzweifel/git-auto-commit-action@master
         with:
