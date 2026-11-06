@@ -32,8 +32,10 @@ jobs:
       with:
        path: ~/work/xash3d-fwgs/xash3d-fwgs/sdk
        key: sdk-cachekey
-    - name: Install dependencies
-      run: bash scripts/gha/deps_${{ matrix.targetos }}.sh
+    - name: Install dependencies and checkout
+      run: |
+       git submodule update --init --checkout 3rdparty/nanogl 3rdparty/gl4es/gl4es
+       bash scripts/gha/deps_${{ matrix.targetos }}.sh
     - name: Build engine
       run: bash scripts/gha/build_${{ matrix.targetos }}.sh
     - name: Upload engine (artifacts)
